@@ -41,11 +41,21 @@ public class ConnectConfig {
 
     private int rmqMaxRedeliveryTimes;
 
-    private int rmqMessageConsumeTimeout = 3000;
+    private int rmqMessageConsumeTimeout = 300;
 
     private int rmqMaxConsumeThreadNums = 32;
 
     private int rmqMinConsumeThreadNums = 1;
+
+    public int getBrokerSuspendMaxTimeMillis() {
+        return brokerSuspendMaxTimeMillis;
+    }
+
+    public void setBrokerSuspendMaxTimeMillis(int brokerSuspendMaxTimeMillis) {
+        this.brokerSuspendMaxTimeMillis = brokerSuspendMaxTimeMillis;
+    }
+
+    private int brokerSuspendMaxTimeMillis = 300;
 
     /**
      * Default topic to send/consume online or offline message.
@@ -90,6 +100,8 @@ public class ConnectConfig {
     private String pluginPaths;
 
     private String connectClusterId = "DefaultConnectCluster";
+
+    private String allocTaskStrategy = "org.apache.rocketmq.connect.runtime.service.strategy.DefaultAllocateConnAndTaskStrategy";
 
     public String getNamesrvAddr() {
         return namesrvAddr;
@@ -251,4 +263,11 @@ public class ConnectConfig {
         this.connectClusterId = connectClusterId;
     }
 
+    public void setAllocTaskStrategy(String allocTaskStrategy) {
+        this.allocTaskStrategy = allocTaskStrategy;
+    }
+
+    public String getAllocTaskStrategy() {
+        return this.allocTaskStrategy;
+    }
 }

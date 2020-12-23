@@ -21,6 +21,7 @@ import io.openmessaging.connector.api.Connector;
 import java.util.List;
 import java.util.Map;
 import org.apache.rocketmq.connect.runtime.common.ConnectKeyValue;
+import org.apache.rocketmq.connect.runtime.utils.Plugin;
 
 /**
  * Interface for config manager. Contains connector configs and task configs. All worker in a cluster should keep the
@@ -39,11 +40,18 @@ public interface ConfigManagementService {
     void stop();
 
     /**
-     * Get all connector configs from the cluster.
+     * Get all connector configs from the cluster filter out DELETE set to 1
      *
      * @return
      */
     Map<String, ConnectKeyValue> getConnectorConfigs();
+
+    /**
+     * Get all connector configs from the cluster including DELETED bit set to 1
+     *
+     * @return
+     */
+    Map<String, ConnectKeyValue> getConnectorConfigsIncludeDeleted();
 
     /**
      * Put the configs of the specified connector in the cluster.
@@ -90,4 +98,6 @@ public interface ConfigManagementService {
          */
         void onConfigUpdate();
     }
+
+    Plugin getPlugin();
 }
